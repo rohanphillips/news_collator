@@ -1,0 +1,17 @@
+The high level view of my project that will scrape a news website will be as follows.
+
+Zerohedge.com has a simple way of accessing a lot of pages with simple changes to a url,
+the plan will be to give the user access to the first 10 pages of information
+The data to be scraped will be as follows
+1. Article Headline
+2. Article Description
+3. Date/time article was published
+4. Number of times article has been viewed at time of scrap
+5. Number of comments
+
+I anticipate that the coding will be broken into a number of modules
+1. CLI functionality
+2. Scraping functionality
+3. Article Storage and manipulation
+
+CLI functionality
