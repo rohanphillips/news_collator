@@ -5,9 +5,10 @@ the plan will be to give the user access to the first 10 pages of information
 The data to be scraped will be as follows
 1. Article Headline
 2. Article Description
-3. Date/time article was published
-4. Number of times article has been viewed at time of scrap
-5. Number of comments
+3. Article link
+4. Date/time article was published
+5. Number of times article has been viewed at time of scrap
+6. Number of comments
 
 I anticipate that the coding will be broken into a number of modules
 1. CLI functionality
@@ -15,3 +16,29 @@ I anticipate that the coding will be broken into a number of modules
 3. Article Storage and manipulation
 
 CLI functionality
+It is anticipated that there will be a loop present asking the user for the commands they wish to use
+until 'exit' is entered.
+Potentially this menu may be able to go two levels deep depending on how fancy we go with functionality
+
+Scraping
+It is expected that the scraper will be handed the last scrape article, and upon command will visit the website and scrape
+only until it finds the last article, or if no article is passed the last x pages of articles from the website
+Each article will have an object created and stored into a temporary silo made available for Article Storage
+
+Article Storage
+Article storage will poll the scraping module to determine if new articles have been found.  When found they will be transfered
+to a permanent storage silo, checked that no duplicates are created.
+
+Article Manipulation
+Functionality will be provided that can do the following
+1. Provide a full print out of articles alphabetically ascending/descending
+2. Sort articles based on the number of views
+3. Sort articles based on the number of comments
+4. Provide a list of articles from a certain date
+5. Provide a list of articles with keyword(s)
+6. Mark an article as a favorite
+7. Request just the link from the article list
+
+ReadMe
+I've already set up a basic readme outline.  This will need to be expanded out with
+functionality descriptions and useage information
