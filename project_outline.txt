@@ -42,3 +42,5 @@ Functionality will be provided that can do the following
 ReadMe
 I've already set up a basic readme outline.  This will need to be expanded out with
 functionality descriptions and useage information
+
+Now awaiting Beth's input
