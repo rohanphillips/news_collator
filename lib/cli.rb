@@ -1,3 +1,5 @@
+require "news_collator.rb"
+require "scraper.rb"
 require 'pry'
 
 class CLI
@@ -11,10 +13,11 @@ class CLI
       puts "3. Exit"
       menu_selection = gets.chomp.to_i
       if menu_selection == 0 || menu_selection > 3
-          menu_selection = 0
-          puts "Please enter a valid selection"
+        menu_selection = 0
+        puts "Please enter a valid selection"
       elsif menu_selection == 1
-
+        newscraper = Scraper.new()
+        newscraper.scrape_url("/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
       elsif menu_selection == 2
 
       end

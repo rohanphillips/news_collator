@@ -1,6 +1,10 @@
 require "news_collator/version"
+require "scraper.rb"
 
 module NewsCollator
   class Error < StandardError; end
-  # Your code goes here...
+
+  class NewsArticles
+
+  end
 end
