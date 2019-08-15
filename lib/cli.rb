@@ -1,9 +1,7 @@
 require 'pry'
 
-module CLIInterface
-  class Menu
-    def method start
-      puts "CLI Menu"
-    end
+class CLI
+  def run
+    puts "CLI Menu"
   end
 end
