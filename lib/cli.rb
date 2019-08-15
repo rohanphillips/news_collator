@@ -13,7 +13,12 @@ class CLI
       if menu_selection == 0 || menu_selection > 3
           menu_selection = 0
           puts "Please enter a valid selection"
+      elsif menu_selection == 1
+
+      elsif menu_selection == 2
+
       end
+
     end
   end
 end
