@@ -10,5 +10,6 @@ require "news_collator"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start(__FILE__)
+#commented out during initial developments
+# require "irb"
+# IRB.start(__FILE__)
