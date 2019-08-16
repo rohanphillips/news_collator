@@ -26,13 +26,10 @@ class Scraper
         return_hash[:views] = card.css(".teaser-details .extras__views span").text
         return_hash[:date_published] = card.css(".extras__created span").text
         return_hash[:website] = website
-        #binding.pry
         if data_block.size > 0
-          #binding.pry
           Article.new(return_hash)
         end
       end
     end
-    binding.pry
   end
 end

@@ -9,6 +9,10 @@ class Article
     self.class.all << self
   end
 
+  def self.website_scraped?(website)
+    all.include?(website)
+  end
+
   def self.all
     @@all
   end
