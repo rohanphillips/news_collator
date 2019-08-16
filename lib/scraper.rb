@@ -18,7 +18,7 @@ class Scraper
      f.each do |card|
       return_hash = {}
       comments = card.css(".extras__comments a span").textex
-      head_line = card.css("h2.teaser-title span").text
+      headline = card.css("h2.teaser-title span").text
       url = card.css("h2.teaser-title a").attribute("href").value
       description = card.css(".teaser-text p").text
       views = card.css(".teaser-details .extras__views span").text
