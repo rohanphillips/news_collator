@@ -1,7 +1,7 @@
 require 'pry'
 
 class Article
-  attr_accessor :headline, :description, :url, :comments, :views, :date_published
+  attr_accessor :website, :headline, :description, :url, :comments, :views, :date_published
   @@all = []
 
   def initialize(article_info)

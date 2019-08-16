@@ -9,28 +9,30 @@ class Scraper
     @errors = false
   end
 
-  def scrape_url(index_url, scrape_spec = {})
+  def scrape_url(website, index_url)
     html = open(index_url)
     doc = Nokogiri::HTML(html)
-    return_array = []
-    f = doc.css(".views-row")
+    return_hash = {}
+    data_block = doc.css(".views-row")
 
-     f.each do |card|
-      return_hash = {}
-      comments = card.css(".extras__comments a span").textex
-      headline = card.css("h2.teaser-title span").text
-      url = card.css("h2.teaser-title a").attribute("href").value
-      description = card.css(".teaser-text p").text
-      views = card.css(".teaser-details .extras__views span").text
-      date_published = card.css(".extras__created span").text
-      binding.pry
-
-    #   return_hash[:location] = card.css(".student-location").text
-    #   return_hash[:name] = card.css(".student-name").text
-    #   return_hash[:profile_url] = card.css("a").attribute("href").value
-    #   return_array << return_hash
+    data_block.each do |card|
+      return_hash.clear
+      comments = card.css(".extras__comments a span").text
+      if comments != "" #if there's no comments, don't process
+        return_hash[:comments] = comments
+        return_hash[:headline] = card.css("h2.teaser-title span").text
+        return_hash[:url] = card.css("h2.teaser-title a").attribute("href").value
+        return_hash[:description] = card.css(".teaser-text p").text
+        return_hash[:views] = card.css(".teaser-details .extras__views span").text
+        return_hash[:date_published] = card.css(".extras__created span").text
+        return_hash[:website] = website
+        #binding.pry
+        if data_block.size > 0
+          #binding.pry
+          Article.new(return_hash)
+        end
+      end
     end
-    return_array
+    binding.pry
   end
-
 end
