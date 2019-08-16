@@ -1,5 +1,4 @@
-require "news_collator.rb"
-require "scraper.rb"
+require "environment.rb"
 require 'pry'
 
 class CLI
@@ -20,6 +19,8 @@ class CLI
         newscraper.scrape_url("/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
       elsif menu_selection == 2
 
+      elsif menu_selection == 3
+        puts "Goodbye!"
       end
 
     end
