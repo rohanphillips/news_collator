@@ -27,7 +27,6 @@ class CLI
           elsif sub_menu_1 = 1
               current_site = Website.create_find_by_name("Zerohedge", "/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
               @site = current_site
-              binding.pry
               current_site.scrape
               puts "Zerohedge initialzed, data is now ready"
           end

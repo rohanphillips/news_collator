@@ -5,12 +5,13 @@ class Article
   @@all = []
 
   def initialize(article_info)
+    #articles currently not checked for duplicate on new, can be expanded later
     article_info.each{|key, value| self.send(("#{key}="), value)}
     self.class.all << self
   end
 
   def self.website_scraped?(website)
-    all.include?(website)
+    collection = all.select{|article| article.website.name == website.name}.first != nil
   end
 
   def self.all
