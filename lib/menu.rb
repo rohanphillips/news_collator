@@ -80,9 +80,11 @@ class MenuController
           article_list(collection)
         when 4
           puts "What Keyword would you like to search for?"
-          keyword = gets.chomp
+          keyword = gets.chomp.downcase
 
-          collection = Article.all.select{|article| (article.website.name == @website.name && article.headline.include?(keyword) == true)}
+          collection = Article.all.select{|article| (article.website.name == @website.name && article.headline.downcase.include?(keyword) == true)
+
+          }
 
           if collection.size > 0
             collection.sort_by{|article| article.headline}
