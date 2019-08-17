@@ -21,6 +21,7 @@ Or install it yourself as:
     $ gem install news_collator
  and run
     $ bundle install
+
 ## Usage
 
 TODO: Write usage instructions here
