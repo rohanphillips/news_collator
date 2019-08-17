@@ -1,8 +1,8 @@
 # NewsCollator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/news_collator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+NewsCollator will visit any website presented in the menu list and return every news tile requested.  Each news tile
+will contain a headline, description, url, comments and views.
+User will have menu options for viewing and displaying all retrieved information
 
 ## Installation
 
@@ -19,7 +19,8 @@ And then execute:
 Or install it yourself as:
 
     $ gem install news_collator
-
+ and run
+    $ bundle install
 ## Usage
 
 TODO: Write usage instructions here
