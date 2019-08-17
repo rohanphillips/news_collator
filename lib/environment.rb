@@ -4,7 +4,6 @@ require "concerns/exit_art.rb"
 require "website.rb"
 require "article.rb"
 require "scraper.rb"
-require "menu.rb"
 
 
 module NewsCollator

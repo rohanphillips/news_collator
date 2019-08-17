@@ -14,29 +14,19 @@ class CLI
       puts "1. Select Website to retrieve news from"
       Article.all.size > 0 ? (puts "2. Retrieve information relating to stories") :(puts "   ^------------^")
       puts "3. Exit"
-      menu_selection = get_menu_selection(menu_items)
+      menu_selection = self.class.get_menu_selection(menu_items)
       case menu_selection
         when 1
-          select_website
+          self.class.select_website
         when 2
-          article_info_list
+          self.class.article_info_list
         when 3
-          CLI.exit_art
+          self.class.exit_art
       end
     end
   end
 
-  def get_menu_selection(number_of_menu_items)
-    menu_selection = 0
-    menu_selection = gets.chomp.to_i
-    if menu_selection == 0 || menu_selection > number_of_menu_items
-      menu_selection = 0
-      puts "Please enter a valid selection"
-    end
-    menu_selection
-  end
-
-  def select_website
+  def self.select_website
     sub_menu = 0
     menu_items = 1
     while sub_menu >= 0 && sub_menu < menu_items
@@ -53,7 +43,17 @@ class CLI
     end
   end
 
-  def article_info_list
+  def self.get_menu_selection(number_of_menu_items)
+    menu_selection = 0
+    menu_selection = gets.chomp.to_i
+    if menu_selection == 0 || menu_selection > number_of_menu_items
+      menu_selection = 0
+      puts "Please enter a valid selection"
+    end
+    menu_selection
+  end
+
+  def self.article_info_list
     sub_menu = 0
     menu_items = 5
     while sub_menu >= 0 && sub_menu < menu_items
@@ -91,13 +91,11 @@ class CLI
           else
             puts "No results found for your keyword search - #{keyword}"
           end
-
-
       end
     end
   end
 
-  def article_list(collection)
+  def self.article_list(collection)
     sub_menu = 0
     while sub_menu >= 0 && sub_menu < collection.size
       collection.each_with_index{|article, index|
@@ -112,7 +110,7 @@ class CLI
     end
   end
 
-  def article_info(collection, selection)
+  def self.article_info(collection, selection)
     sub_menu = 0
     menu_items = 6
     will_exit = false
