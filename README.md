@@ -24,7 +24,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+  $ CLI.new.run
+
+  or
+
+  $ yourCLI = CLI.new
+  $ yourCLI.run
 
 ## Development
 
