@@ -24,12 +24,12 @@ Or install it yourself as:
 
 ## Usage
 
-  $ CLI.new.run
+    $ CLI.new.run
 
-  or
+or
 
-  $ yourCLI = CLI.new
-  $ yourCLI.run
+    $ yourCLI = CLI.new
+    $ yourCLI.run
 
 ## Development
 
