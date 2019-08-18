@@ -4,6 +4,7 @@ require 'pry'
 
 class Scraper
   attr_accessor :errors
+  attr_reader :data_block
 
   def initialize
     @errors = false
@@ -14,7 +15,7 @@ class Scraper
     doc = Nokogiri::HTML(html)
     return_hash = {}
     data_block = doc.css(".views-row")
-
+    @data_block = data_block
     data_block.each do |card|
       return_hash.clear
       comments = card.css(".extras__comments a span").text

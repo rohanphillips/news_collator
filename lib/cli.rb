@@ -2,8 +2,13 @@ require "environment.rb"
 require 'pry'
 
 class CLI
-  @website = 0
+  attr_accessor :website
+
   extend ExitArt::ClassMethods
+
+  def initialize
+    @website = "test"
+  end
 
   def run
     menu_selection = 0
@@ -36,9 +41,11 @@ class CLI
       case sub_menu
         when 1
           current_site = Website.create_find_by_name("Zerohedge", "/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
-          @website = current_site
+          @website = current_site.name
           current_site.scrape
+          @website = "tester"
           puts "Zerohedge initialzed, data is now ready \n"
+          binding.pry
       end
     end
   end
