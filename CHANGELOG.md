@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## 2019-07-17
+### Changed
+- Version 0.1.2
+###Added
+- Functionality of available information for display changed from static menu to dynamic
+
 ## 2019-07-16
 ### Added
 - First release 0.1.1
