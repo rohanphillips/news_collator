@@ -33,17 +33,26 @@ class CLI
 
   def select_website
     sub_menu = 0
-    menu_items = 1
+    menu_items = 2
     while sub_menu >= 0 && sub_menu < menu_items
       puts "Which site are you interested in?"
-      puts "1. ZeroHedge"
+      puts "1. ZeroHedge - Locally saved Version"
+      puts "2. ZeroHedge - Live Site"
       sub_menu = get_menu_selection(menu_items)
       case sub_menu
         when 1
-          current_site = Website.create_find_by_name("Zerohedge", "/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
+          current_site = Website.create_find_by_name("Zerohedge", "../news_collator_cli_gem/bin/test_files/zero.html")
+          #/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html
           @website = current_site
           current_site.scrape
-          puts "Zerohedge initialzed, data is now ready \n"
+          puts "Zerohedge - Local initialized, data is now ready \n"
+          sub_menu = 3 #force menu exit
+        when 2
+          current_site = Website.create_find_by_name("Zerohedge", "https://www.zerohedge.com/")
+          @website = current_site
+          current_site.scrape
+          puts "Zerohedge - Live initialized, data is now ready \n"
+          sub_menu = 3 #force menu exit
       end
     end
   end
@@ -127,7 +136,7 @@ class CLI
       puts "3. Number of Comments"
       puts "4. Number of times viewed"
       puts "5. Date / Time published"
-      puts "6. return to Prior Menu"
+      puts "6. Return to Prior Menu"
 
       sub_menu = get_menu_selection(menu_items)
       case sub_menu
