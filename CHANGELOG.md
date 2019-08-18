@@ -6,18 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Marketing banner to prompt users to upgrade to a free account
+- Support for Nokogiri that will help determine what has been returned in a more readable format
 
 ### Changed
 
-## 2017-03-06
+## 2019-07-16
 ### Added
-- New simplified registration form for free users @evanagee
-- New stripe responder for successful charges
-- Update Salesforce membership record when first payment is received
-- Ability for users to edit their membership
-- Meta titles/descriptions throughout the app
+- First release 0.1.1
 
 ### Changed
-- Updated registration flow
-- Removed title length restriction from resource cards
+- Major Release
