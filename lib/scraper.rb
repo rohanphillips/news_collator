@@ -4,7 +4,6 @@ require 'pry'
 
 class Scraper
   attr_accessor :errors
-  attr_reader :data_block
 
   def initialize
     @errors = false
@@ -12,15 +11,13 @@ class Scraper
 
   def scrape_url(website, index_url)
     html = open(index_url)
-    #write('../news_collator_cli_gem/bin/test_files/zero1.html', html)
     doc = Nokogiri::HTML(html)
     return_hash = {}
     data_block = doc.css(".views-row")
-    @data_block = data_block
     data_block.each do |card|
       return_hash.clear
       headline = card.css("h2.teaser-title span").text
-      if headline != "" #if there's no comments, don't process
+      if headline != ""
         return_hash[:comments] = card.css(".extras__comments a span").text
         return_hash[:headline] = headline
         return_hash[:url] = card.css("h2.teaser-title a").attribute("href").value
@@ -32,7 +29,6 @@ class Scraper
           Article.new(return_hash)
         end
       end
-
     end
   end
 end

@@ -2,7 +2,6 @@ require 'pry'
 
 class Website
   attr_accessor :name, :url
-  attr_reader :test_block
   include Memorable::InstanceMethods
 
   @@all = []
@@ -28,7 +27,6 @@ class Website
     if Article.website_scraped?(self) == false
       ns = Scraper.new
       ns.scrape_url(self, @url)
-      @test_block = ns.data_block
     end
   end
 
