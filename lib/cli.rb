@@ -4,10 +4,10 @@ require 'pry'
 class CLI
   attr_accessor :website
 
-  extend ExitArt::ClassMethods
+  include ExitArt::InstanceMethods
 
   def initialize
-    @website = "test"
+    @website = nil
   end
 
   def run
@@ -19,19 +19,19 @@ class CLI
       puts "1. Select Website to retrieve news from"
       Article.all.size > 0 ? (puts "2. Retrieve information relating to stories") :(puts "   ^------------^")
       puts "3. Exit"
-      menu_selection = self.class.get_menu_selection(menu_items)
+      menu_selection = get_menu_selection(menu_items)
       case menu_selection
         when 1
-          self.class.select_website
+          select_website
         when 2
-          self.class.article_info_list
+          article_info_list
         when 3
-          self.class.exit_art
+          exit_art
       end
     end
   end
 
-  def self.select_website
+  def select_website
     sub_menu = 0
     menu_items = 1
     while sub_menu >= 0 && sub_menu < menu_items
@@ -41,16 +41,14 @@ class CLI
       case sub_menu
         when 1
           current_site = Website.create_find_by_name("Zerohedge", "/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html")
-          @website = current_site.name
+          @website = current_site
           current_site.scrape
-          @website = "tester"
           puts "Zerohedge initialzed, data is now ready \n"
-          binding.pry
       end
     end
   end
 
-  def self.get_menu_selection(number_of_menu_items)
+  def get_menu_selection(number_of_menu_items)
     menu_selection = 0
     menu_selection = gets.chomp.to_i
     if menu_selection == 0 || menu_selection > number_of_menu_items
@@ -60,7 +58,7 @@ class CLI
     menu_selection
   end
 
-  def self.article_info_list
+  def article_info_list
     sub_menu = 0
     menu_items = 5
     while sub_menu >= 0 && sub_menu < menu_items
@@ -102,7 +100,7 @@ class CLI
     end
   end
 
-  def self.article_list(collection)
+  def article_list(collection)
     sub_menu = 0
     while sub_menu >= 0 && sub_menu < collection.size
       collection.each_with_index{|article, index|
@@ -117,7 +115,7 @@ class CLI
     end
   end
 
-  def self.article_info(collection, selection)
+  def article_info(collection, selection)
     sub_menu = 0
     menu_items = 6
     will_exit = false

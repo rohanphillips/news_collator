@@ -1,5 +1,5 @@
 module ExitArt
-  module ClassMethods
+  module InstanceMethods
     def exit_art
       puts ""
       puts " "
