@@ -118,27 +118,27 @@ class CLI
       puts "#{collection.size + 1}. Return to Prior Menu"
       puts "Select the Article you'd like additional info on"
       sub_menu = get_menu_selection(collection.size + 1)
-      if sub_menu < collection.size
+      if sub_menu < collection.size + 1
         article_info(collection, sub_menu)
       end
     end
   end
 
-  def article_available_elements(collection, selection)
+  def article_available_elements(article)
     elements = []
-    if collection[selection - 1].description != ""
+    if article.description != ""
       elements << create_element_hash("description", "Description")
     end
-    if collection[selection - 1].url != ""
+    if article.url != ""
       elements << create_element_hash("url", "URL")
     end
-    if collection[selection - 1].comments != ""
+    if article.comments != ""
       elements << create_element_hash("comments", "Number of Comments")
     end
-    if collection[selection - 1].views != ""
+    if article.views != ""
       elements << create_element_hash("views", "Number of times viewed")
     end
-    if collection[selection - 1].date_published != ""
+    if article.date_published != ""
       elements << create_element_hash("date_published", "Date / Time published")
     end
   end
@@ -152,7 +152,7 @@ class CLI
 
   def article_info(collection, selection)
     sub_menu = 0
-    available_elements = article_available_elements(collection, selection)
+    available_elements = article_available_elements(collection[selection - 1])
     menu_items = available_elements.size + 1
 
     while (sub_menu >= 0 && sub_menu < menu_items)
@@ -168,20 +168,6 @@ class CLI
       if sub_menu <= available_elements.size
         puts "Here's the #{available_elements[sub_menu - 1][:description]} \n#{collection[selection - 1].instance_variable_get("@#{available_elements[sub_menu - 1][:name]}")}\n"
       end
-      # case sub_menu
-      #   when 1
-      #     puts "Here's the #{available_elements[sub_menu - 1][:description]} \n#{collection[selection - 1].instance_variable_get("@#{available_elements[sub_menu - 1][:name]}")}\n"
-      #   when 2
-      #     puts "Here's the URL \n#{collection[selection - 1].url}\n"
-      #   when 3
-      #     puts "Here's the Number of Comments \n#{collection[selection - 1].comments}\n"
-      #   when 4
-      #     puts "Here's the Number of times viewed \n#{collection[selection - 1].viewed}\n"
-      #   when 5
-      #     puts "Here's the Date / Time published \n#{collection[selection - 1].date_published}\n"
-      #   when 6
-      #     will_exit = true
-      # end
     end
   end
 end
