@@ -1,58 +1,76 @@
-require "environment.rb"
-require 'pry'
 
 class CLI
   attr_accessor :website
-
-  include ExitArt::InstanceMethods
+  include AsciiArt::InstanceMethods
 
   def initialize
     @website = nil
   end
 
   def run
+    menu_collection = []
     menu_selection = 0
-    menu_items = 3
-    puts "Welcome to News Collator"
+    menu_items = 1
+    welcome_art
     while menu_selection >= 0 && menu_selection < menu_items
-      puts "What would you like to do? (Enter number associated with you selection)"
-      puts "1. Select Website to retrieve news from"
-      Article.all.size > 0 ? (puts "2. Retrieve information relating to stories for #{@website.name}") :(puts "   ^------------^")
-      puts "3. Exit"
+      menu_collection.clear
+      puts "What would you like to do?".light_green + " (Enter number associated with you selection)\n".light_cyan
+      menu_collection << create_menu_hash("select", "Select Website to retrieve news from")
+      Article.all.size > 0 ? (menu_collection << create_menu_hash("retrieve", "Retrieve information relating to stories for #{@website.name}")) :()
+      menu_collection << create_menu_hash("exit", "Exit")
+      menu_items = menu_collection.size
+      create_menu(menu_collection, "light_green")
       menu_selection = get_menu_selection(menu_items)
-      case menu_selection
-        when 1
+      case menu_collection[menu_selection - 1][:action]
+      when "select"
           select_website
-        when 2
+        when "retrieve"
           article_info_list
-        when 3
+        when "exit"
           exit_art
       end
     end
   end
 
+  def create_menu_hash(action, text)
+    menu_hash = {}
+    menu_hash[:action] = action
+    menu_hash[:text] = text
+    menu_hash
+  end
+
+  def create_menu(collection, color)
+    collection.each_with_index do |message_hash, index|
+      puts "#{index + 1}.".colorize(:"#{color}") + message_hash[:text].colorize(:"#{color}")
+    end
+  end
+
   def select_website
-    sub_menu = 0
+    menu_collection =[]
+    menu_selection = 0
     menu_items = 2
-    while sub_menu >= 0 && sub_menu < menu_items
-      puts "Which site are you interested in?"
-      puts "1. ZeroHedge - Locally saved Version"
-      puts "2. ZeroHedge - Live Site"
-      sub_menu = get_menu_selection(menu_items)
-      case sub_menu
-        when 1
+    while menu_selection >= 0 && menu_selection < menu_items
+      menu_collection.clear
+      puts "\nWhich site are you interested in?".light_blue
+      menu_collection << create_menu_hash("zhlocal", "ZeroHedge - Locally saved Version")
+      menu_collection << create_menu_hash("zhlive", "ZeroHedge - Live Site")
+      menu_items = menu_collection.size
+      create_menu(menu_collection, "light_blue")
+      menu_selection = get_menu_selection(menu_items)
+      case menu_collection[menu_selection - 1][:action]
+      when "zhlocal"
           current_site = Website.create_find_by_name("Zerohedge - Local", "../news_collator_cli_gem/bin/test_files/zero.html")
           #/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html
           @website = current_site
           current_site.scrape
-          puts "Zerohedge - Local initialized, data is now ready \n"
-          sub_menu = 3 #force menu exit
-        when 2
+          puts "Zerohedge - Local initialized, data is now ready\n".light_yellow
+          menu_selection = 3 #force menu exit
+        when "zhlive"
           current_site = Website.create_find_by_name("Zerohedge", "https://www.zerohedge.com/")
           @website = current_site
           current_site.scrape
           puts "Zerohedge - Live initialized, data is now ready \n"
-          sub_menu = 3 #force menu exit
+          menu_selection = 3 #force menu exit
       end
     end
   end
@@ -62,37 +80,41 @@ class CLI
     menu_selection = gets.chomp.to_i
     if menu_selection == 0 || menu_selection > number_of_menu_items
       menu_selection = 0
-      puts "Please enter a valid selection"
+      puts "Please enter a valid selection".red
     end
     menu_selection
   end
 
   def article_info_list
-    sub_menu = 0
-    menu_items = 5
-    while sub_menu >= 0 && sub_menu < menu_items
-      puts "What data would you like to return?"
-      puts "1. Sorted Article Headline list"
-      puts "2. Sorted Article list by number of views"
-      puts "3. Sorted Article list by number of comments"
-      puts "4. Sorted Article list containing Headline Keyword"
-      puts "5. Back to Main Menu"
-      sub_menu = get_menu_selection(menu_items)
-      case sub_menu
-        when 1
-          puts "Here's your sorted Article Headline list"
+    menu_collection = []
+    menu_selection = 0
+    menu_items = 1
+    while menu_selection >= 0 && menu_selection < menu_items
+      menu_collection.clear
+      puts "\nSelect the data you'd like to display".light_blue
+      menu_collection << create_menu_hash("sorted_article_list", "Sorted Article Headline list")
+      menu_collection << create_menu_hash("sorted_by_views", "Sorted Article list by number of views")
+      menu_collection << create_menu_hash("sorted_by_comments", "Sorted Article list by number of comments")
+      menu_collection << create_menu_hash("get_keyword", "Sorted Article list containing Headline Keyword")
+      menu_collection << create_menu_hash("back", "Back to Main Menu")
+      menu_items = menu_collection.size
+      create_menu(menu_collection, "light_blue")
+      menu_selection = get_menu_selection(menu_items)
+      case menu_collection[menu_selection - 1][:action]
+        when "sorted_article_list"
+          puts "\nHere's your sorted Article Headline list".magenta
           collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.headline}
-          article_list(collection)
-        when 2
-          puts "Here's your sorted Article list by number of views"
+          article_list(collection, "magenta")
+        when "sorted_by_views"
+          puts "\nHere's your sorted Article list by number of views".magenta
           collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.views}
-          article_list(collection)
-        when 3
-          puts "Here's your sorted Article list by number of comments"
+          article_list(collection, "magenta")
+        when "sorted_by_comments"
+          puts "\nHere's your sorted Article list by number of comments".magenta
           collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.comments}
-          article_list(collection)
-        when 4
-          puts "What Keyword would you like to search for?"
+          article_list(collection, "magenta")
+        when "get_keyword"
+          puts "\nWhat Keyword would you like to search for?".magenta
           keyword = gets.chomp.downcase
           collection = Article.all.select{|article| (article.website.name == @website.name && article.headline.downcase.include?(keyword) == true)
 
@@ -100,26 +122,26 @@ class CLI
 
           if collection.size > 0
             collection.sort_by{|article| article.headline}
-            puts "Here's your sorted Article list containing your Keyword"
-            article_list(collection)
+            puts "\nHere's your sorted Article list containing your Keyword".magenta
+            article_list(collection, "magenta")
           else
-            puts "No results found for your keyword search - #{keyword}"
+            puts "\nNo results found for your keyword search - #{keyword}".red
           end
       end
     end
   end
 
-  def article_list(collection)
+  def article_list(collection, color)
     sub_menu = 0
     while sub_menu >= 0 && sub_menu < collection.size
       collection.each_with_index{|article, index|
-        puts "#{index + 1}. #{article.headline}"
+        puts "#{index + 1}. #{article.headline}".colorize(:"#{color}")
       }
-      puts "#{collection.size + 1}. Return to Prior Menu"
-      puts "Select the Article you'd like additional info on"
+      puts "#{collection.size + 1}. Return to Prior Menu".colorize(:"#{color}")
+      puts "\nSelect the Article you'd like additional info on\n".colorize(:"#{color}")
       sub_menu = get_menu_selection(collection.size + 1)
       if sub_menu < collection.size + 1
-        article_info(collection, sub_menu)
+        article_info(collection, sub_menu, "yellow")
       end
     end
   end
@@ -150,23 +172,23 @@ class CLI
     hash
   end
 
-  def article_info(collection, selection)
+  def article_info(collection, selection, color)
     sub_menu = 0
     available_elements = article_available_elements(collection[selection - 1])
     menu_items = available_elements.size + 1
 
     while (sub_menu >= 0 && sub_menu < menu_items)
-      puts "What data would you like to return for this headline?"
-      puts collection[selection - 1].headline
+      puts "\nWhat data would you like to return for this headline?\n".colorize(:"#{color}")
+      puts collection[selection - 1].headline.colorize(:"#{color}")
 
       available_elements.each_with_index do |element, index|
-        puts "#{index + 1}. #{element[:description]}"
+        puts "#{index + 1}. #{element[:description]}".colorize(:"#{color}")
       end
-      puts "#{available_elements.size + 1}. Return to Prior Menu"
+      puts "#{available_elements.size + 1}. Return to Prior Menu".colorize(:"#{color}")
 
       sub_menu = get_menu_selection(menu_items)
       if sub_menu <= available_elements.size
-        puts "Here's the #{available_elements[sub_menu - 1][:description]} \n#{collection[selection - 1].instance_variable_get("@#{available_elements[sub_menu - 1][:name]}")}\n"
+        puts "Here's the #{available_elements[sub_menu - 1][:description]} \n#{collection[selection - 1].instance_variable_get("@#{available_elements[sub_menu - 1][:name]}")}\n".colorize(:"#{color}")
       end
     end
   end

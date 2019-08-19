@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## 2019-07-18
+### Changed
+- Version 0.1.4
+###Added
+- file requirements consolidated into environment file, other files cleaned up of 'requires'
+- Main menu functionality cleaned up.
+- Static menu creation addressed, replaced with dynamic menu creation logic to assist for future expansion
+- Added color to menus 
+- Cleaned up presentation
+
 ## 2019-07-17
 ### Changed
 - Version 0.1.3
