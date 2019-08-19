@@ -140,7 +140,7 @@ class CLI
       puts "#{collection.size + 1}. Return to Prior Menu".colorize(:"#{color}")
       puts "\nSelect the Article you'd like additional info on\n".colorize(:"#{color}")
       sub_menu = get_menu_selection(collection.size + 1)
-      if sub_menu < collection.size + 1
+      if sub_menu <= collection.size
         article_info(collection, sub_menu, "yellow")
       end
     end
