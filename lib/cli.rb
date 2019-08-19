@@ -80,7 +80,8 @@ class CLI
     menu_selection = gets.chomp.to_i
     if menu_selection == 0 || menu_selection > number_of_menu_items
       menu_selection = 0
-      puts "Please enter a valid selection".red
+      puts "Please enter a valid selection, press any key to continue".red
+      gets
     end
     menu_selection
   end
@@ -140,7 +141,7 @@ class CLI
       puts "#{collection.size + 1}. Return to Prior Menu".colorize(:"#{color}")
       puts "\nSelect the Article you'd like additional info on\n".colorize(:"#{color}")
       sub_menu = get_menu_selection(collection.size + 1)
-      if sub_menu <= collection.size
+      if sub_menu > 0 && sub_menu <= collection.size
         article_info(collection, sub_menu, "yellow")
       end
     end
