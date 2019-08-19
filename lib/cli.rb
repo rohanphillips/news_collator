@@ -21,13 +21,15 @@ class CLI
       menu_items = menu_collection.size
       create_menu(menu_collection, "light_green")
       menu_selection = get_menu_selection(menu_items)
-      case menu_collection[menu_selection - 1][:action]
-      when "select"
-          select_website
-        when "retrieve"
-          article_info_list
-        when "exit"
-          exit_art
+      if menu_selection > 0 && menu_selection <= menu_collection.size
+        case menu_collection[menu_selection - 1][:action]
+          when "select"
+            select_website
+          when "retrieve"
+            article_info_list
+          when "exit"
+            exit_art
+        end
       end
     end
   end
@@ -78,7 +80,7 @@ class CLI
   def get_menu_selection(number_of_menu_items)
     menu_selection = 0
     menu_selection = gets.chomp.to_i
-    if menu_selection == 0 || menu_selection > number_of_menu_items
+    if menu_selection <= 0 || menu_selection > number_of_menu_items
       menu_selection = 0
       puts "Please enter a valid selection, press any key to continue".red
       gets
@@ -133,8 +135,8 @@ class CLI
   end
 
   def article_list(collection, color)
-    sub_menu = 0
-    while sub_menu >= 0 && sub_menu < collection.size
+    sub_menu = 1
+    while sub_menu > 0 && sub_menu < collection.size
       collection.each_with_index{|article, index|
         puts "#{index + 1}. #{article.headline}".colorize(:"#{color}")
       }
@@ -174,11 +176,11 @@ class CLI
   end
 
   def article_info(collection, selection, color)
-    sub_menu = 0
+    sub_menu = 1
     available_elements = article_available_elements(collection[selection - 1])
     menu_items = available_elements.size + 1
 
-    while (sub_menu >= 0 && sub_menu < menu_items)
+    while (sub_menu > 0 && sub_menu < menu_items)
       puts "\nWhat data would you like to return for this headline?\n".colorize(:"#{color}")
       puts collection[selection - 1].headline.colorize(:"#{color}")
 
@@ -188,8 +190,11 @@ class CLI
       puts "#{available_elements.size + 1}. Return to Prior Menu".colorize(:"#{color}")
 
       sub_menu = get_menu_selection(menu_items)
-      if sub_menu <= available_elements.size
+
+      if sub_menu > 0 && sub_menu < menu_items
         puts "Here's the #{available_elements[sub_menu - 1][:description]} \n#{collection[selection - 1].instance_variable_get("@#{available_elements[sub_menu - 1][:name]}")}\n".colorize(:"#{color}")
+      elsif sub_menu != menu_items
+        sub_menu = 1
       end
     end
   end
