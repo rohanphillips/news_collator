@@ -61,7 +61,7 @@ class CLI
       menu_selection = get_menu_selection(menu_items)
       case menu_collection[menu_selection - 1][:action]
       when "zhlocal"
-          current_site = Website.create_find_by_name("Zerohedge - Local", "#{Dir.pwd}/test_files/zero.html")
+          current_site = Website.create_find_by_name("Zerohedge - Local", "#{Dir.pwd}/bin/test_files/zero.html")
           #/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html
           @website = current_site
           current_site.scrape
