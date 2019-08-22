@@ -1,5 +1,5 @@
 
-class CLI
+class NewsCollator::CLI
   attr_accessor :website
   include AsciiArt::InstanceMethods
 
@@ -17,7 +17,7 @@ class CLI
       menu_collection.clear
       puts "What would you like to do?".light_green + " (Enter number associated with you selection)\n".light_cyan
       menu_collection << create_menu_hash("select", "Select Website to retrieve news from")
-      Article.all.size > 0 ? (menu_collection << create_menu_hash("retrieve", "Retrieve information relating to stories for #{@website.name}")) :()
+      NewsCollator::Article.all.size > 0 ? (menu_collection << create_menu_hash("retrieve", "Retrieve information relating to stories for #{@website.name}")) :()
       menu_collection << create_menu_hash("exit", "Exit")
       menu_items = menu_collection.size
       create_menu(menu_collection, "light_green")
@@ -62,14 +62,14 @@ class CLI
       menu_selection = get_menu_selection(menu_items)
       case menu_collection[menu_selection - 1][:action]
       when "zhlocal"
-          current_site = Website.create_find_by_name("Zerohedge - Local", "#{Dir.pwd}/bin/test_files/zero.html")
+          current_site = NewsCollator::Website.create_find_by_name("Zerohedge - Local", "#{Dir.pwd}/bin/test_files/zero.html")
           #/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html
           @website = current_site
           current_site.scrape
           puts "Zerohedge - Local initialized, data is now ready\n".light_yellow
           menu_selection = 3 #force menu exit
         when "zhlive"
-          current_site = Website.create_find_by_name("Zerohedge", "https://www.zerohedge.com/")
+          current_site = NewsCollator::Website.create_find_by_name("Zerohedge", "https://www.zerohedge.com/")
           @website = current_site
           current_site.scrape
           puts "Zerohedge - Live initialized, data is now ready \n"
@@ -107,20 +107,20 @@ class CLI
       case menu_collection[menu_selection - 1][:action]
         when "sorted_article_list"
           puts "\nHere's your sorted Article Headline list".magenta
-          collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.headline}
+          collection = NewsCollator::Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.headline}
           article_list(collection, "magenta")
         when "sorted_by_views"
           puts "\nHere's your sorted Article list by number of views".magenta
-          collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.views}
+          collection = NewsCollator::Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.views}
           article_list(collection, "magenta")
         when "sorted_by_comments"
           puts "\nHere's your sorted Article list by number of comments".magenta
-          collection = Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.comments}
+          collection = NewsCollator::Article.all.select{|article| article.website.name == @website.name}.sort_by{|article| article.comments}
           article_list(collection, "magenta")
         when "get_keyword"
           puts "\nWhat Keyword would you like to search for?".magenta
           keyword = gets.chomp.downcase
-          collection = Article.all.select{|article| (article.website.name == @website.name && article.headline.downcase.include?(keyword) == true)
+          collection = NewsCollator::Article.all.select{|article| (article.website.name == @website.name && article.headline.downcase.include?(keyword) == true)
           }
           if collection.size > 0
             collection.sort_by{|article| article.headline}

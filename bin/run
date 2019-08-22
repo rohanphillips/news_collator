@@ -2,5 +2,5 @@
 
 require_relative "../lib/environment.rb"
 
-mycli = CLI.new
+mycli = NewsCollator::CLI.new
 mycli.run

@@ -1,5 +1,5 @@
 
-class Website
+class NewsCollator::Website
   attr_accessor :name, :url
   include Memorable::InstanceMethods
 
@@ -12,9 +12,9 @@ class Website
   end
 
   def self.create_find_by_name(name, url)
-    collection = Article.all.select{|article| article.website.name == name}.first
+    collection = NewsCollator::Article.all.select{|article| article.website.name == name}.first
     if collection == nil
-      newsite = Website.new(name,url)
+      newsite = NewsCollator::Website.new(name,url)
       newsite.save
     else
       newsite = collection.website
@@ -23,8 +23,8 @@ class Website
   end
 
   def scrape
-    if Article.website_scraped?(self) == false
-      ns = Scraper.new
+    if NewsCollator::Article.website_scraped?(self) == false
+      ns = NewsCollator::Scraper.new
       ns.scrape_url(self, @url)
     end
   end

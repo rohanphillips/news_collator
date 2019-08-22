@@ -1,5 +1,5 @@
 
-class Scraper
+class NewsCollator::Scraper
   attr_accessor :errors
 
   def initialize
@@ -23,7 +23,7 @@ class Scraper
         return_hash[:date_published] = card.css(".extras__created span").text
         return_hash[:website] = website
         if data_block.size > 0
-          Article.new(return_hash)
+          NewsCollator::Article.new(return_hash)
         end
       end
     end
