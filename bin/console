@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative "../lib/environment.rb"
-
 #commented out during initial developments
  # require "irb"
  # IRB.start(__FILE__)
-
-
-mycli = CLI.new
-mycli.run
