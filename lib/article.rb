@@ -1,4 +1,3 @@
-
 class Article
   attr_accessor :website, :headline, :description, :url, :comments, :views, :date_published
   @@all = []

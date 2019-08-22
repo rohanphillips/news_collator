@@ -8,6 +8,7 @@ class CLI
   end
 
   def run
+    self # what is self?
     menu_collection = []
     menu_selection = 0
     menu_items = 1
@@ -61,7 +62,7 @@ class CLI
       menu_selection = get_menu_selection(menu_items)
       case menu_collection[menu_selection - 1][:action]
       when "zhlocal"
-          current_site = Website.create_find_by_name("Zerohedge - Local", "../news_collator_cli_gem/bin/test_files/zero.html")
+          current_site = Website.create_find_by_name("Zerohedge - Local", "#{Dir.pwd}/bin/test_files/zero.html")
           #/home/rohanphillips/temporary/news_collator_cli_gem/bin/test_files/zero.html
           @website = current_site
           current_site.scrape
@@ -120,9 +121,7 @@ class CLI
           puts "\nWhat Keyword would you like to search for?".magenta
           keyword = gets.chomp.downcase
           collection = Article.all.select{|article| (article.website.name == @website.name && article.headline.downcase.include?(keyword) == true)
-
           }
-
           if collection.size > 0
             collection.sort_by{|article| article.headline}
             puts "\nHere's your sorted Article list containing your Keyword".magenta
@@ -136,7 +135,7 @@ class CLI
 
   def article_list(collection, color)
     sub_menu = 1
-    while sub_menu > 0 && sub_menu < collection.size
+    while sub_menu > 0 && sub_menu <= collection.size
       collection.each_with_index{|article, index|
         puts "#{index + 1}. #{article.headline}".colorize(:"#{color}")
       }
