@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "news_collator/version"
 
 Gem::Specification.new do |spec|
+  spec.add_dependency "rake", ">= 12.3.3"
   spec.name          = "news_collator"
   spec.version       = NewsCollator::VERSION
   spec.authors       = ["'Rohan Phillips'"]
